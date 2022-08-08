@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+
+		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+		<GenerateDependencyFile>false</GenerateDependencyFile>
+
+		<Description>Import, edit, and invoke OpenAPI documents.</Description>
+		<RepositoryUrl>https://github.com/matt9ucci/OpenApi.Pwsh.git</RepositoryUrl>
+		<Authors>Masatoshi Higuchi</Authors>
+		<Copyright>(c) Masatoshi Higuchi.</Copyright>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)'=='Release'">
+		<DebugType>none</DebugType>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.OpenApi" Version="1.3.2" />
+		<PackageReference Include="Microsoft.OpenApi.Readers" Version="1.3.2" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="src\script\**" TargetPath="%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="..\LICENSE" CopyToPublishDirectory="PreserveNewest" />
+		<None Include="ThirdPartyNotices.txt" CopyToPublishDirectory="PreserveNewest" />
+	</ItemGroup>
+
+</Project>
