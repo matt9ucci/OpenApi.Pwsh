@@ -19,6 +19,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="System.Management.Automation" Version="7.2.0" PrivateAssets="all" />
 		<PackageReference Include="Microsoft.OpenApi" Version="1.3.2" />
 		<PackageReference Include="Microsoft.OpenApi.Readers" Version="1.3.2" />
 	</ItemGroup>
