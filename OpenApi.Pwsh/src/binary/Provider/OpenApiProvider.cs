@@ -1,4 +1,5 @@
 using System.Management.Automation.Provider;
+using OpenApi.Pwsh.Provider.Item;
 
 namespace OpenApi.Pwsh.Provider;
 
@@ -12,6 +13,10 @@ public class OpenApiProvider : NavigationCmdletProvider {
 	/// The name of the provider.
 	/// </summary>
 	public const string ProviderName = "OpenApi";
+
+	private OpenApiDriveInfo Drive => PSDriveInfo is OpenApiDriveInfo drive
+		? drive
+		: throw new PSInvalidCastException();
 
 	#region DriveCmdletProvider overrides
 
@@ -60,5 +65,28 @@ public class OpenApiProvider : NavigationCmdletProvider {
 		throw new PSNotSupportedException($"Not supported: IsValidPath({nameof(path)}: \"{path}\")");
 	}
 
+	/// <inheritdoc/>
+	protected override bool ItemExists(string path) {
+		return GetItem(NewProviderPath(path)) is not NotFound;
+	}
+
 	#endregion
+
+	private IItem GetItem(OpenApiProviderPath path) {
+		IItem item = Drive.GetRootItem();
+
+		foreach (var segment in path.Segments) {
+			if (item is IContainer container) {
+				item = container.GetChildItem(segment);
+			} else {
+				return new NotFound(segment);
+			}
+		}
+
+		return item;
+	}
+
+	private OpenApiProviderPath NewProviderPath(string path) {
+		return new(path, ItemSeparator);
+	}
 }
