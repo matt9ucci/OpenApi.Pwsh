@@ -57,6 +57,19 @@ public class OpenApiProvider : NavigationCmdletProvider {
 
 	#region ItemCmdletProvider overrides
 
+	/// <inheritdoc/>
+	protected override void GetItem(string path) {
+		var providerPath = NewProviderPath(path);
+		var item = GetItem(providerPath);
+
+		if (item is NotFound) {
+			// Will not be thrown because the item exists when this method is called
+			throw new ItemNotFoundException($"Not found: {path}");
+		} else {
+			WriteItemObject(item.Value, providerPath.Path, item.IsContainer);
+		}
+	}
+
 	/// <summary>
 	/// Not supported.
 	/// </summary>
