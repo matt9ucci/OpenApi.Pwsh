@@ -102,6 +102,21 @@ public class OpenApiProvider : NavigationCmdletProvider {
 
 	#endregion
 
+	#region ContainerCmdletProvider overrides
+
+	/// <inheritdoc/>
+	protected override void GetChildNames(string path, ReturnContainers returnContainers) {
+		var providerPath = NewProviderPath(path);
+		var item = GetItem(providerPath);
+		if (item is IContainer container) {
+			foreach (var child in container.GetChildItems()) {
+				WriteItemObject(child.Name, providerPath.Join(child.Name).Path, child.IsContainer);
+			}
+		}
+	}
+
+	#endregion
+
 	private IContainer GetContainer(OpenApiProviderPath path) {
 		IContainer container = Drive.GetRootItem();
 
