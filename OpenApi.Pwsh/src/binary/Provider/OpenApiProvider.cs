@@ -117,6 +117,15 @@ public class OpenApiProvider : NavigationCmdletProvider {
 
 	#endregion
 
+	#region NavigationCmdletProvider overrides
+
+	/// <inheritdoc/>
+	protected override bool IsItemContainer(string path) {
+		return GetItem(NewProviderPath(path)).IsContainer;
+	}
+
+	#endregion
+
 	private IContainer GetContainer(OpenApiProviderPath path) {
 		IContainer container = Drive.GetRootItem();
 
