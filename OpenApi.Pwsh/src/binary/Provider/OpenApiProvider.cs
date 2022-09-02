@@ -83,7 +83,38 @@ public class OpenApiProvider : NavigationCmdletProvider {
 		return GetItem(NewProviderPath(path)) is not NotFound;
 	}
 
+	/// <inheritdoc/>
+	protected override void SetItem(string path, object value) {
+		var providerPath = NewProviderPath(path);
+		if (providerPath.Segments.Length < 1) {
+			throw new PSArgumentException($"Cannot set the item because it is root: path '{path}'.", nameof(path));
+		}
+
+		var container = GetContainer(providerPath);
+
+		if (container is NotFound) {
+			throw new ItemNotFoundException($"Cannot find the container of the path '{path}'.");
+		} else {
+			IItem item = container.SetChildItem(providerPath.Leaf, value);
+			WriteItemObject(item.Value, providerPath.Path, item.IsContainer);
+		}
+	}
+
 	#endregion
+
+	private IContainer GetContainer(OpenApiProviderPath path) {
+		IContainer container = Drive.GetRootItem();
+
+		foreach (var segment in path.ContainerSegments) {
+			if (container.GetChildItem(segment) is IContainer c) {
+				container = c;
+			} else {
+				return new NotFound(segment);
+			}
+		}
+
+		return container;
+	}
 
 	private IItem GetItem(OpenApiProviderPath path) {
 		IItem item = Drive.GetRootItem();
