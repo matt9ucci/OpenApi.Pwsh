@@ -105,6 +105,20 @@ public class OpenApiProvider : NavigationCmdletProvider {
 	#region ContainerCmdletProvider overrides
 
 	/// <inheritdoc/>
+	protected override void GetChildItems(string path, bool recurse) {
+		GetChildItems(path, recurse, uint.MaxValue);
+	}
+
+	/// <inheritdoc/>
+	protected override void GetChildItems(string path, bool recurse, uint depth) {
+		var providerPath = NewProviderPath(path);
+		var item = GetItem(providerPath);
+		if (item is IContainer container) {
+			GetChildItems(container, providerPath, recurse, depth);
+		}
+	}
+
+	/// <inheritdoc/>
 	protected override void GetChildNames(string path, ReturnContainers returnContainers) {
 		var providerPath = NewProviderPath(path);
 		var item = GetItem(providerPath);
@@ -125,6 +139,16 @@ public class OpenApiProvider : NavigationCmdletProvider {
 	}
 
 	#endregion
+
+	private void GetChildItems(IContainer container, OpenApiProviderPath containerPath, bool recurse, uint depth) {
+		foreach (var child in container.GetChildItems()) {
+			var childPath = containerPath.Join(child.Name);
+			WriteItemObject(child.Value, childPath.Path, child.IsContainer);
+			if (recurse && depth > uint.MinValue && child is IContainer childAsContainer) {
+				GetChildItems(childAsContainer, childPath, recurse, depth - 1);
+			}
+		}
+	}
 
 	private IContainer GetContainer(OpenApiProviderPath path) {
 		IContainer container = Drive.GetRootItem();
