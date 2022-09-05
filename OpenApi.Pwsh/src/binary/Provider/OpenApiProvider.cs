@@ -129,6 +129,11 @@ public class OpenApiProvider : NavigationCmdletProvider {
 		}
 	}
 
+	/// <inheritdoc/>
+	protected override bool HasChildItems(string path) {
+		return GetItem(NewProviderPath(path)) is IContainer container && container.GetChildItems().Any();
+	}
+
 	#endregion
 
 	#region NavigationCmdletProvider overrides

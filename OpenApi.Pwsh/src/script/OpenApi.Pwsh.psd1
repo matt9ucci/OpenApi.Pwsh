@@ -1,5 +1,5 @@
 @{
-ModuleVersion = '0.2.0'
+ModuleVersion = '0.3.0'
 Description   = 'Import, edit, and invoke OpenAPI documents.'
 
 NestedModules = @(
@@ -17,7 +17,15 @@ PrivateData = @{ PSData = @{
 	ProjectUri   = 'https://github.com/matt9ucci/OpenApi.Pwsh'
 	LicenseUri   = 'https://github.com/matt9ucci/OpenApi.Pwsh/blob/master/LICENSE'
 	Tags         = @('OpenAPI', 'Swagger')
-	ReleaseNotes = 'OpenApiProvider is available: a minimal implementation of NavigationCmdletProvider.'
+	ReleaseNotes = @'
+New provider cmdlets:
+* New-PSDrive
+* Test-Path
+* Get-Item
+* Set-Item
+* Get-ChildItem
+* Get/Set/Push/Pop-Location
+'@
 }}
 
 GUID = '3063FF81-7DFA-4601-9CD9-4F74FE746D8C'

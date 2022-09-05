@@ -94,3 +94,24 @@ Describe '<GetItem>' -ForEach @(
 		} | Should -ExceptionType ([ItemNotFoundException])
 	}
 }
+
+Describe 'Get-Item -Path wildcard' {
+	BeforeEach {
+		[SuppressMessageAttribute('PSUseDeclaredVarsMoreThanAssignments', '')]
+		$Path = $Segments -join $ItemSeparator
+	}
+
+	It '<Path>' -TestCases @(
+		@{ Segments = @('OpenApi:', 'D*') }
+		@{ Segments = @('OpenApi:', 'Doc?') }
+		@{ Segments = @('OpenApi:', '*[12]') }
+	) {
+		$docs = Get-Item -Path $Path
+
+		$docs | Should -BeOfType ([OpenApiDocument])
+		$docs.PSPath | Sort-Object | Should -BeExactly @(
+			(@("OpenApi.Pwsh\OpenApi::$Root", 'Doc1') -join $ItemSeparator)
+			(@("OpenApi.Pwsh\OpenApi::$Root", 'Doc2') -join $ItemSeparator)
+		)
+	}
+}
