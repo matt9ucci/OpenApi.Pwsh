@@ -1,0 +1,14 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "Pester: current file",
+			"type": "PowerShell",
+			"request": "launch",
+			"script": "Invoke-Pester -Path ${file} -Output Detailed",
+			"presentation": {
+				"group": "Pester",
+			},
+		},
+	],
+}
