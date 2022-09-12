@@ -69,4 +69,30 @@ public class OpenApiBasicRegistryTest {
 	public void GetNames_Empty() {
 		Assert.Empty(new OpenApiBasicRegistry().GetNames());
 	}
+
+	[Fact]
+	public void Unregister_OneByOne() {
+		OpenApiBasicRegistry registry = new(new() {
+			{ "Doc1", new OpenApiDocument() },
+			{ "Doc2", new OpenApiDocument() }
+		});
+
+		Assert.True(registry.TryGet("Doc1", out var _));
+		Assert.True(registry.TryGet("Doc2", out var _));
+
+		Assert.True(registry.Unregister("Doc1"));
+
+		Assert.False(registry.TryGet("Doc1", out var _));
+		Assert.True(registry.TryGet("Doc2", out var _));
+
+		Assert.True(registry.Unregister("Doc2"));
+
+		Assert.False(registry.TryGet("Doc1", out var _));
+		Assert.False(registry.TryGet("Doc2", out var _));
+	}
+
+	[Fact]
+	public void Unregister_NotFound() {
+		Assert.False(new OpenApiBasicRegistry().Unregister("NotFound"));
+	}
 }

@@ -51,4 +51,9 @@ public class OpenApiBasicRegistry : IOpenApiRegistry {
 	public bool TryGet(string name, out OpenApiDocument doc) {
 		return _docs.TryGetValue(name, out doc!);
 	}
+
+	/// <inheritdoc/>
+	public bool Unregister(string name) {
+		return _docs.Remove(name);
+	}
 }

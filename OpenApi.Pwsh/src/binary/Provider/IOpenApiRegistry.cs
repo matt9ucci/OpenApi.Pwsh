@@ -26,4 +26,10 @@ public interface IOpenApiRegistry {
 	/// <param name="doc">The OpenAPI definition.</param>
 	/// <returns><code>true</code> if it is registered.</returns>
 	bool TryGet(string name, out OpenApiDocument doc);
+
+	/// <summary>
+	/// Removes the OpenAPI definition.
+	/// </summary>
+	/// <param name="name">The OpenAPI name.</param>
+	bool Unregister(string name);
 }
