@@ -15,6 +15,15 @@ internal abstract class ListItemBase<TElement> : ItemBase<IList<TElement>>, ICon
 		return Value.Select((element, index) => CreateChildItem(index.ToString(), element));
 	}
 
+	/// <inheritdoc/>
+	public void RemoveChildItem(string name) {
+		if (!int.TryParse(name, out var index)) {
+			throw new PSArgumentException($"'{name}' is not an int.", nameof(name));
+		}
+
+		Value.RemoveAt(index);
+	}
+
 	/// <summary>
 	/// Adds or replaces an item in the list by the name.
 	/// </summary>

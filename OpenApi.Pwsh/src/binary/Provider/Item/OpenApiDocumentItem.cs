@@ -17,6 +17,16 @@ internal class OpenApiDocumentItem : ItemBase<OpenApiDocument>, IContainer {
 	}
 
 	/// <inheritdoc/>
+	public void RemoveChildItem(string name) {
+		switch (name.ToLower()) {
+			case "externaldocs": Value.ExternalDocs = null; break;
+			case "info": Value.Info = null; break;
+			case "servers": Value.Servers = null; break;
+			default: throw new PSArgumentException($"Cannot remove the child item '{name}'.", nameof(name));
+		};
+	}
+
+	/// <inheritdoc/>
 	public IItem SetChildItem(string name, object value) {
 		return name.ToLower() switch {
 			"externaldocs" => new OpenApiExternalDocsItem(name, Value.ExternalDocs = Cast<OpenApiExternalDocs>(value)),

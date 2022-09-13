@@ -16,6 +16,15 @@ internal class OpenApiInfoItem : ItemBase<OpenApiInfo>, IContainer {
 	}
 
 	/// <inheritdoc/>
+	public void RemoveChildItem(string name) {
+		switch (name.ToLower()) {
+			case "contact": Value.Contact = null; break;
+			case "license": Value.License = null; break;
+			default: throw new PSArgumentException($"Cannot remove the child item '{name}'.", nameof(name));
+		};
+	}
+
+	/// <inheritdoc/>
 	public IItem SetChildItem(string name, object value) {
 		return name.ToLower() switch {
 			"contact" => new OpenApiContactItem(name, Value.Contact = Cast<OpenApiContact>(value)),

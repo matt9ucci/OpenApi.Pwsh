@@ -23,6 +23,12 @@ internal interface IContainer : IItem {
 	IEnumerable<IItem> GetChildItems();
 
 	/// <summary>
+	/// Removes the child item by name.
+	/// </summary>
+	/// <param name="name">The name of the child item.</param>
+	void RemoveChildItem(string name);
+
+	/// <summary>
 	/// Sets the child item by name.
 	/// </summary>
 	/// <param name="name">The name of the child item.</param>

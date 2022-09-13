@@ -24,6 +24,11 @@ internal class OpenApiRegistryItem : ItemBase<IOpenApiRegistry>, IContainer {
 	}
 
 	/// <inheritdoc/>
+	public void RemoveChildItem(string name) {
+		_ = Value.Unregister(name);
+	}
+
+	/// <inheritdoc/>
 	public IItem SetChildItem(string name, object value) {
 		var doc = Cast<OpenApiDocument>(value);
 		Value.Register(name, doc);

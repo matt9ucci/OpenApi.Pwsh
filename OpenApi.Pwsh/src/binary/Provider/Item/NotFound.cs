@@ -21,6 +21,14 @@ internal class NotFound : ItemBase<object>, IContainer {
 	/// Not supported.
 	/// </summary>
 	/// <exception cref="PSNotSupportedException"/>
+	public void RemoveChildItem(string name) {
+		throw new PSNotSupportedException();
+	}
+
+	/// <summary>
+	/// Not supported.
+	/// </summary>
+	/// <exception cref="PSNotSupportedException"/>
 	public IItem SetChildItem(string name, object value) {
 		throw new PSNotSupportedException();
 	}
