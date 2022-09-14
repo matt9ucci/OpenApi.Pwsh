@@ -27,6 +27,8 @@ internal class OpenApiProviderPath {
 	internal string Root => FullSegments[0];
 	internal string Leaf => FullSegments.TakeLast(1).Single();
 
+	internal bool IsRoot => Path == Root;
+
 	internal OpenApiProviderPath(string path, char separator) {
 		Separator = separator;
 

@@ -86,7 +86,7 @@ public class OpenApiProvider : NavigationCmdletProvider {
 	/// <inheritdoc/>
 	protected override void SetItem(string path, object value) {
 		var providerPath = NewProviderPath(path);
-		if (providerPath.Segments.Length < 1) {
+		if (providerPath.IsRoot) {
 			throw new PSArgumentException($"Cannot set the item because it is root: path '{path}'.", nameof(path));
 		}
 
