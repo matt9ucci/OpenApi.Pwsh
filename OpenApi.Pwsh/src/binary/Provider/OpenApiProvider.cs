@@ -134,6 +134,21 @@ public class OpenApiProvider : NavigationCmdletProvider {
 		return GetItem(NewProviderPath(path)) is IContainer container && container.GetChildItems().Any();
 	}
 
+	/// <summary>
+	/// Removes the item and its child items.
+	/// </summary>
+	/// <param name="path">The path of the item.</param>
+	/// <param name="recurse">Ignored because all the child items will always be removed.</param>
+	/// <exception cref="PSArgumentException"><paramref name="path"/> is root.</exception>
+	protected override void RemoveItem(string path, bool recurse) {
+		var providerPath = NewProviderPath(path);
+		if (providerPath.IsRoot) {
+			throw new PSArgumentException($"Cannot remove the item because it is root: path '{path}'.", nameof(path));
+		}
+
+		RemoveItem(providerPath);
+	}
+
 	#endregion
 
 	#region NavigationCmdletProvider overrides
@@ -185,5 +200,15 @@ public class OpenApiProvider : NavigationCmdletProvider {
 
 	private OpenApiProviderPath NewProviderPath(string path) {
 		return new(path, ItemSeparator);
+	}
+
+	private void RemoveItem(OpenApiProviderPath path) {
+		var container = GetContainer(path);
+
+		if (container is NotFound) {
+			throw new ItemNotFoundException($"Cannot find the container of the path '{path}'.");
+		} else {
+			container.RemoveChildItem(path.Leaf);
+		}
 	}
 }
