@@ -57,6 +57,24 @@ public class OpenApiProvider : NavigationCmdletProvider {
 
 	#region ItemCmdletProvider overrides
 
+	/// <summary>
+	/// Clears the content of an item, that is, removes the item and its child items.
+	/// </summary>
+	/// <remarks>
+	/// The content is an OpenAPI definition or fragment.
+	/// The corresponding item cannot be determined by an empty content, so it is removed.
+	/// </remarks>
+	/// <param name="path">The path of the item.</param>
+	/// <exception cref="PSArgumentException"><paramref name="path"/> is root.</exception>
+	protected override void ClearItem(string path) {
+		var providerPath = NewProviderPath(path);
+		if (providerPath.IsRoot) {
+			throw new PSArgumentException($"Cannot clear the item because it is root: path '{path}'.", nameof(path));
+		}
+
+		RemoveItem(providerPath);
+	}
+
 	/// <inheritdoc/>
 	protected override void GetItem(string path) {
 		var providerPath = NewProviderPath(path);
