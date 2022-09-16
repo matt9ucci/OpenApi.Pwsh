@@ -7,7 +7,7 @@ namespace OpenApi.Pwsh.Provider;
 /// Provides <see cref="OpenApiDocument"/> objects.
 /// </summary>
 [CmdletProvider(ProviderName, ProviderCapabilities.None)]
-public class OpenApiProvider : NavigationCmdletProvider {
+public class OpenApiProvider : NavigationCmdletProvider, IContentCmdletProvider {
 
 	/// <summary>
 	/// The name of the provider.
@@ -174,6 +174,40 @@ public class OpenApiProvider : NavigationCmdletProvider {
 	/// <inheritdoc/>
 	protected override bool IsItemContainer(string path) {
 		return GetItem(NewProviderPath(path)).IsContainer;
+	}
+
+	#endregion
+
+	#region IContentCmdletProvider implementations
+
+	/// <inheritdoc/>
+	public void ClearContent(string path) {
+		throw new PSNotImplementedException($"ClearContent({nameof(path)}: \"{path}\") is not implemented.");
+	}
+
+	/// <inheritdoc/>
+	public object ClearContentDynamicParameters(string path) {
+		throw new PSNotImplementedException($"ClearContentDynamicParameters({nameof(path)}: \"{path}\") is not implemented.");
+	}
+
+	/// <inheritdoc/>
+	public IContentReader GetContentReader(string path) {
+		throw new PSNotImplementedException($"GetContentReader({nameof(path)}: \"{path}\") is not implemented.");
+	}
+
+	/// <inheritdoc/>
+	public object GetContentReaderDynamicParameters(string path) {
+		throw new PSNotImplementedException($"GetContentReaderDynamicParameters({nameof(path)}: \"{path}\") is not implemented.");
+	}
+
+	/// <inheritdoc/>
+	public IContentWriter GetContentWriter(string path) {
+		throw new PSNotImplementedException($"GetContentWriter({nameof(path)}: \"{path}\") is not implemented.");
+	}
+
+	/// <inheritdoc/>
+	public object GetContentWriterDynamicParameters(string path) {
+		throw new PSNotImplementedException($"GetContentWriterDynamicParameters({nameof(path)}: \"{path}\") is not implemented.");
 	}
 
 	#endregion
