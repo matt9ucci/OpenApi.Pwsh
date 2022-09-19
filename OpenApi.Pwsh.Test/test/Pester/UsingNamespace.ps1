@@ -1,5 +1,10 @@
 using namespace System.Collections.Generic
 using namespace System.Diagnostics.CodeAnalysis
+using namespace System.IO
 using namespace System.Management.Automation
+using namespace Microsoft.OpenApi
+using namespace Microsoft.OpenApi.Extensions
+using namespace Microsoft.OpenApi.Interfaces
 using namespace Microsoft.OpenApi.Models
+using namespace OpenApi.Pwsh
 using namespace OpenApi.Pwsh.Provider

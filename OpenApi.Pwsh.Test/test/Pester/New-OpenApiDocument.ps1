@@ -7,8 +7,12 @@ using namespace Microsoft.OpenApi.Models
 		Contact = [OpenApiContact]::new()
 		License = [OpenApiLicense]::new()
 	}
-	Servers      = [List[OpenApiServer]]@(
-		[OpenApiServer]::new()
-		[OpenApiServer]::new()
+	Servers = [List[OpenApiServer]]@(
+		[OpenApiServer]@{
+			Url = 'https://example.com/Servers/0/Url'
+		}
+		[OpenApiServer]@{
+			Url = 'https://example.com/Servers/1/Url'
+		}
 	)
 }
