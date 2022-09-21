@@ -180,14 +180,27 @@ public class OpenApiProvider : NavigationCmdletProvider, IContentCmdletProvider 
 
 	#region IContentCmdletProvider implementations
 
-	/// <inheritdoc/>
+	/// <summary>
+	/// Clears the content of an item, that is, removes the item and its child items.
+	/// </summary>
+	/// <remarks>
+	/// The content is an OpenAPI definition or fragment.
+	/// The corresponding item cannot be determined by an empty content, so it is removed.
+	/// </remarks>
+	/// <param name="path">The path of the item.</param>
+	/// <exception cref="PSArgumentException"><paramref name="path"/> is root.</exception>
 	public void ClearContent(string path) {
-		throw new PSNotImplementedException($"ClearContent({nameof(path)}: \"{path}\") is not implemented.");
+		var providerPath = NewProviderPath(path);
+		if (providerPath.IsRoot) {
+			throw new PSArgumentException($"Cannot clear the content because it is root: path '{path}'.", nameof(path));
+		}
+
+		RemoveItem(providerPath);
 	}
 
 	/// <inheritdoc/>
 	public object ClearContentDynamicParameters(string path) {
-		throw new PSNotImplementedException($"ClearContentDynamicParameters({nameof(path)}: \"{path}\") is not implemented.");
+		return null!;
 	}
 
 	/// <inheritdoc/>
