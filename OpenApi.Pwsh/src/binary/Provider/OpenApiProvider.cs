@@ -235,12 +235,30 @@ public class OpenApiProvider : NavigationCmdletProvider, IContentCmdletProvider 
 
 	/// <inheritdoc/>
 	public IContentWriter GetContentWriter(string path) {
-		throw new PSNotImplementedException($"GetContentWriter({nameof(path)}: \"{path}\") is not implemented.");
+		var dynParams = DynamicParameters switch {
+			OpenApiProviderGetContentWriterDynamicParameters p => p,
+			_ => throw new PSNotSupportedException($"{DynamicParameters.GetType()} is not supported.")
+		};
+
+		var providerPath = NewProviderPath(path);
+		var container = GetContainer(providerPath);
+
+		if (container is NotFound) {
+			// Will not be thrown because the item exists when this method is called
+			throw new ItemNotFoundException($"Not found: {path}");
+		} else {
+			return new OpenApiContentWriter(container, providerPath.Leaf, dynParams.ReaderSettings, this);
+		}
 	}
 
 	/// <inheritdoc/>
 	public object GetContentWriterDynamicParameters(string path) {
-		throw new PSNotImplementedException($"GetContentWriterDynamicParameters({nameof(path)}: \"{path}\") is not implemented.");
+		return new OpenApiProviderGetContentWriterDynamicParameters();
+	}
+
+	private class OpenApiProviderGetContentWriterDynamicParameters {
+		[Parameter]
+		public OpenApiReaderSettings ReaderSettings { get; init; } = Configuration.Current.OpenApiReaderSettings;
 	}
 
 	#endregion
