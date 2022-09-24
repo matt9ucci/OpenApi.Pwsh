@@ -15,6 +15,16 @@ public class Configuration {
 	public static Configuration Current { get; set; }
 
 	/// <summary>
+	/// The drive name of the OpenApi provider in use.
+	/// </summary>
+	public string DriveName { get; set; }
+
+	/// <summary>
+	/// When <c>true</c>, the module creates an OpenApi drive with the name <see cref="DriveName"/>.
+	/// </summary>
+	public bool DriveAutoCreation { get; set; }
+
+	/// <summary>
 	/// The OpenAPI Specification version of OpenAPI document.
 	/// </summary>
 	public OpenApiSpecVersion Version { get; set; }
@@ -38,6 +48,8 @@ public class Configuration {
 	/// Default configuration.
 	/// </summary>
 	public Configuration() {
+		DriveName = "OpenApi";
+		DriveAutoCreation = true;
 		Version = OpenApiSpecVersion.OpenApi3_0;
 		Format = OpenApiFormat.Json;
 		OpenApiReaderSettings = new OpenApiReaderSettings();
