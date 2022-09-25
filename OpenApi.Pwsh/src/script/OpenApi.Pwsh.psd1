@@ -2,6 +2,7 @@
 ModuleVersion = '0.4.0'
 Description   = 'Import, edit, and invoke OpenAPI documents.'
 
+RootModule = 'OpenApi.Pwsh.psm1'
 NestedModules = @(
 	'OpenApi.Pwsh.dll'
 )
