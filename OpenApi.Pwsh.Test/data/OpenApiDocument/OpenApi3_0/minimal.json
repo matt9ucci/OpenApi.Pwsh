@@ -1,0 +1,8 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Info Title",
+    "version": "0.1.0"
+  },
+  "paths": { }
+}

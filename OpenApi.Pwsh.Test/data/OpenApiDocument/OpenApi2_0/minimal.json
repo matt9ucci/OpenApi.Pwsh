@@ -1,0 +1,8 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Info Title",
+    "version": "0.1.0"
+  },
+  "paths": { }
+}
