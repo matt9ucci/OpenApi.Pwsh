@@ -2,6 +2,24 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
+			"name": "OpenApi.Pwsh",
+			"type": "coreclr",
+			"request": "launch",
+			"preLaunchTask": "dotnet build",
+			"program": "pwsh",
+			"args": [
+				"-NoExit",
+				"-NoProfile",
+				"-Command",
+				"Import-Module ${workspaceFolder}/OpenApi.Pwsh/bin/Debug/net6.0/OpenApi.Pwsh.psd1",
+			],
+			"console": "integratedTerminal",
+			"internalConsoleOptions": "neverOpen",
+			"presentation": {
+				"group": "PowerShell",
+			},
+		},
+		{
 			"name": "Pester: current file",
 			"type": "PowerShell",
 			"request": "launch",
