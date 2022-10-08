@@ -1,4 +1,3 @@
-using System.Management.Automation.Language;
 using Microsoft.OpenApi.Extensions;
 
 namespace OpenApi.Pwsh.Cmdlet;

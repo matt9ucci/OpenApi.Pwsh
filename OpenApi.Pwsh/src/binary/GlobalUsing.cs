@@ -1,7 +1,10 @@
 global using System.Collections;
 global using System.Management.Automation;
+global using System.Management.Automation.Language;
+global using System.Text;
 global using Microsoft.OpenApi;
 global using Microsoft.OpenApi.Interfaces;
 global using Microsoft.OpenApi.Models;
 global using Microsoft.OpenApi.Readers;
+global using Microsoft.OpenApi.Services;
 global using Microsoft.OpenApi.Writers;
