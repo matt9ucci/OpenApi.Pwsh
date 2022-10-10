@@ -1,3 +1,5 @@
+using OpenApi.Pwsh.Completion;
+
 namespace OpenApi.Pwsh.Cmdlet;
 
 /// <summary>
@@ -11,6 +13,7 @@ public class GetOpenApiDocumentCmdlet : PSCmdlet {
 	/// The name which is associated with the OpenAPI document.
 	/// </summary>
 	[Parameter(Position = 0)]
+	[ArgumentCompleter(typeof(OpenApiNameCompleter))]
 	[SupportsWildcards]
 	public string OpenApiName { get; init; } = "*";
 
