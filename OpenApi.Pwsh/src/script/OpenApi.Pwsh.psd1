@@ -1,5 +1,5 @@
 @{
-ModuleVersion = '0.5.0'
+ModuleVersion = '0.6.0'
 Description   = 'Import, edit, and invoke OpenAPI documents.'
 
 RootModule = 'OpenApi.Pwsh.psm1'
@@ -18,6 +18,7 @@ CmdletsToExport = @(
 	'Convert-OpenApiDocument'
 	'Get-OpenApiDocument'
 	'Import-OpenApiDocument'
+	'Show-OpenApiExternalDocs'
 )
 
 PrivateData = @{ PSData = @{
@@ -25,10 +26,9 @@ PrivateData = @{ PSData = @{
 	LicenseUri   = 'https://github.com/matt9ucci/OpenApi.Pwsh/blob/master/LICENSE'
 	Tags         = @('OpenAPI', 'Swagger')
 	ReleaseNotes = @'
-New cmdlets:
-* Convert-OpenApiDocument
-* Get-OpenApiDocument
-* Import-OpenApiDocument
+* Update Microsoft.OpenApi to 1.4.4
+* New cmdlet: Show-OpenApiExternalDocs
+* New completers: OpenApiName, OperationId
 '@
 }}
 
