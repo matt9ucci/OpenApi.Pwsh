@@ -33,4 +33,8 @@
 		<None Include="ThirdPartyNotices.txt" CopyToPublishDirectory="PreserveNewest" />
 	</ItemGroup>
 
+	<ItemGroup>
+		<InternalsVisibleTo Include="$(MSBuildProjectName).Test" />
+	</ItemGroup>
+
 </Project>
