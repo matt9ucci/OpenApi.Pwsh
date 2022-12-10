@@ -1,4 +1,5 @@
 using OpenApi.Pwsh.Completion;
+using OpenApi.Pwsh.Extension;
 
 namespace OpenApi.Pwsh.Cmdlet;
 
@@ -64,14 +65,8 @@ public class ShowOpenApiExternalDocsCmdlet : PSCmdlet {
 	}
 
 	private OpenApiExternalDocs GetExternalDocs(OpenApiDocument doc) {
-		if (string.IsNullOrEmpty(OperationId)) {
-			return doc.ExternalDocs ?? new();
-		}
-
-		OperationSearch search = new((_, _, operation) => operation.OperationId == OperationId);
-		new OpenApiWalker(search).Walk(doc);
-		return search.SearchResults.Any()
-			? search.SearchResults.Single().Operation.ExternalDocs ?? new()
-			: throw new ItemNotFoundException($"Cannot find OperationId '{OperationId}' because it does not exist.");
+		return string.IsNullOrEmpty(OperationId)
+			? doc.ExternalDocs ?? new()
+			: doc.GetSearchResultByOperationId(OperationId).Operation.ExternalDocs ?? new();
 	}
 }
