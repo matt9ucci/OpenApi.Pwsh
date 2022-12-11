@@ -19,7 +19,7 @@ $doc.Info = @{
 	Title   = 'New Title'
 }
 
-# Export the doc as JSON file
+# Export the doc as a JSON file
 Convert-OpenApiDocument $doc | Out-File -FilePath $HOME\petstore-new.json
 ```
 
