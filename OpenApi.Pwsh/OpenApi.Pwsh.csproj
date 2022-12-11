@@ -20,6 +20,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="System.Management.Automation" Version="7.2.0" PrivateAssets="all" />
+		<PackageReference Include="Microsoft.PowerShell.Commands.Utility" Version="7.2.0" PrivateAssets="all" />
 		<PackageReference Include="Microsoft.OpenApi" Version="1.4.4" />
 		<PackageReference Include="Microsoft.OpenApi.Readers" Version="1.4.4" />
 		<PackageReference Include="Tavis.UriTemplates" Version="2.0.0" />

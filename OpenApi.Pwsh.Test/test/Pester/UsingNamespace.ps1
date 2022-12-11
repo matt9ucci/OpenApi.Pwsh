@@ -6,5 +6,6 @@ using namespace Microsoft.OpenApi
 using namespace Microsoft.OpenApi.Extensions
 using namespace Microsoft.OpenApi.Interfaces
 using namespace Microsoft.OpenApi.Models
+using namespace Microsoft.PowerShell.Commands
 using namespace OpenApi.Pwsh
 using namespace OpenApi.Pwsh.Provider

@@ -1,5 +1,5 @@
 @{
-ModuleVersion = '0.6.0'
+ModuleVersion = '0.7.0'
 Description   = 'Import, edit, and invoke OpenAPI documents.'
 
 RootModule = 'OpenApi.Pwsh.psm1'
@@ -15,6 +15,7 @@ RequiredAssemblies = @(
 PowerShellVersion = '7.2'
 
 CmdletsToExport = @(
+	'Build-IrmParam'
 	'Convert-OpenApiDocument'
 	'Get-OpenApiDocument'
 	'Import-OpenApiDocument'
@@ -26,9 +27,8 @@ PrivateData = @{ PSData = @{
 	LicenseUri   = 'https://github.com/matt9ucci/OpenApi.Pwsh/blob/master/LICENSE'
 	Tags         = @('OpenAPI', 'Swagger')
 	ReleaseNotes = @'
-* Update Microsoft.OpenApi to 1.4.4
-* New cmdlet: Show-OpenApiExternalDocs
-* New completers: OpenApiName, OperationId
+* New cmdlet: Build-IrmParam
+* Add Tavis.UriTemplates as an RFC 6570 URI template processor
 '@
 }}
 
