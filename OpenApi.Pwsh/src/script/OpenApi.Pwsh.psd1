@@ -9,7 +9,9 @@ NestedModules = @(
 RequiredAssemblies = @(
 	'Microsoft.OpenApi.dll'
 	'Microsoft.OpenApi.Readers.dll'
-	'SharpYaml.dll'
+	# Lazy loading
+	# 'SharpYaml.dll'
+	# 'Tavis.UriTemplates.dll'
 )
 
 PowerShellVersion = '7.2'
