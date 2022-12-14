@@ -76,6 +76,11 @@ public class BuildIrmParamCmdlet : PSCmdlet, IDynamicParameters {
 			["Method"] = searchResult.CurrentKeys.Operation.ToWebRequestMethod(),
 		};
 
+		SessionState.PSVariable.Set(new("IrmParam", irmParams) {
+			Description = "Automatically set by Build-IrmParam cmdlet.",
+			Options = ScopedItemOptions.None,
+		});
+
 		WriteObject(irmParams, false);
 	}
 

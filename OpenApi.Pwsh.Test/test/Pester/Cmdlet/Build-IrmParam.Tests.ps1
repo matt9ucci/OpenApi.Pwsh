@@ -46,6 +46,7 @@ Describe 'Build-IrmParam' {
 		$result | Should -BeOfType [hashtable]
 		$result.Uri | Should -BeExactly ([uri]::new('https://a/users/abcd'))
 		$result.Method | Should -BeExactly ([WebRequestMethod]::Get)
+		$result | Should -BeExactly $IrmParam
 	}
 
 	It 'builds by required parameter and optional one' {
@@ -54,6 +55,7 @@ Describe 'Build-IrmParam' {
 		$result | Should -BeOfType [hashtable]
 		$result.Uri | Should -BeExactly ([uri]::new('https://a/users/abcd?timeout=60'))
 		$result.Method | Should -BeExactly ([WebRequestMethod]::Get)
+		$result | Should -BeExactly $IrmParam
 	}
 }
 
