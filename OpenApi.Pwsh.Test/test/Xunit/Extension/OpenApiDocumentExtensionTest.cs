@@ -66,4 +66,83 @@ public class OpenApiDocumentExtensionTest {
 		var exception = Assert.Throws<PSArgumentException>(() => doc.GetSearchResultByOperationId(operationId));
 		Assert.Equal($"The operationId '{operationId}' is duplicated.", exception.Message);
 	}
+
+	[Theory]
+	[InlineData(0, 0)]
+	[InlineData(0, 1)]
+	[InlineData(0, 2)]
+	[InlineData(1, 0)]
+	[InlineData(1, 1)]
+	[InlineData(1, 2)]
+	[InlineData(2, 0)]
+	[InlineData(2, 1)]
+	[InlineData(2, 2)]
+	public void GetOpenApiParameter(int pathItemParamCount, int operationParamCount) {
+		const string path = "path01";
+		const OperationType operationType = OperationType.Get;
+		const string operationId = "GetPath01";
+
+		List<OpenApiParameter> pathItemParams = new();
+		for (var i = 0; i < pathItemParamCount; i++) {
+			pathItemParams.Add(new() { Name = $"PathItemParam{i}", In = ParameterLocation.Path });
+		}
+
+		List<OpenApiParameter> operationParams = new();
+		for (var i = 0; i < operationParamCount; i++) {
+			operationParams.Add(new() { Name = $"OperationParam{i}", In = ParameterLocation.Path });
+		}
+
+		OpenApiDocument doc = new() {
+			Paths = new() {
+				[path] = new() {
+					Parameters = pathItemParams,
+					Operations = new Dictionary<OperationType, OpenApiOperation> {
+						[operationType] = new() {
+							OperationId = operationId,
+							Parameters = operationParams
+						}
+					}
+				}
+			}
+		};
+
+		var openApiParams = doc.GetOpenApiParameter(operationId);
+
+		Assert.Equal(pathItemParamCount + operationParamCount, openApiParams.Count);
+		Assert.Equal(doc.Paths[path].Parameters.Concat(doc.Paths[path].Operations[operationType].Parameters), openApiParams);
+	}
+
+	[Fact]
+	public void GetOpenApiParameter_PathItem_Overridden_By_Operation() {
+		const string path = "path01";
+		const OperationType operationType = OperationType.Get;
+		const string operationId = "GetPath01";
+
+		OpenApiDocument doc = new() {
+			Paths = new() {
+				[path] = new() {
+					Parameters = new List<OpenApiParameter> {
+						new() { Name = $"PathItemParam01", In = ParameterLocation.Path },
+						new() { Name = $"Overridden", In = ParameterLocation.Path, Description = "PathItem" },
+					},
+					Operations = new Dictionary<OperationType, OpenApiOperation> {
+						[operationType] = new() {
+							OperationId = operationId,
+							Parameters = new List<OpenApiParameter> {
+								new() { Name = $"OperationParam01", In = ParameterLocation.Path },
+								new() { Name = $"Overridden", In = ParameterLocation.Path, Description = "Operation" },
+							}
+						}
+					}
+				}
+			}
+		};
+
+		var openApiParams = doc.GetOpenApiParameter(operationId);
+
+		Assert.Equal(3, openApiParams.Count);
+		Assert.Equal(doc.Paths[path].Parameters[0], openApiParams[0]);
+		Assert.Equal(doc.Paths[path].Operations[operationType].Parameters[0], openApiParams[1]);
+		Assert.Equal(doc.Paths[path].Operations[operationType].Parameters[1], openApiParams[2]);
+	}
 }

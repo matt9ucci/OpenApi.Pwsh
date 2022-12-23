@@ -33,9 +33,8 @@ public class BuildIrmParamCmdlet : PSCmdlet, IDynamicParameters {
 		}
 
 		var doc = GetDocument();
-		var searchResult = doc.GetSearchResultByOperationId(OperationId);
 
-		var openApiParamsForDynParams = searchResult.Operation.Parameters.Where(
+		var openApiParamsForDynParams = doc.GetOpenApiParameter(OperationId).Where(
 			param => param.In is ParameterLocation.Path or ParameterLocation.Query
 		);
 
@@ -61,7 +60,7 @@ public class BuildIrmParamCmdlet : PSCmdlet, IDynamicParameters {
 		var template = PathTemplating.CreateUriTemplate(
 			GetServerUrl(doc),
 			searchResult.CurrentKeys.Path,
-			searchResult.Operation.Parameters
+			doc.GetOpenApiParameter(OperationId)
 		);
 
 		foreach (var dynParam in _dynParams.Values) {
